@@ -25,15 +25,19 @@ const App: React.FC = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
-      const responses = await fetch(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      // .then(response => response.json())
-      // .then(data => setRobotGallery(data))
-      const data = await responses.json();
-      setRobotGallery(data);
-
+      try {
+        const responses = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        // .then(response => response.json())
+        // .then(data => setRobotGallery(data))
+        const data = await responses.json();
+        setRobotGallery(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
+      }
       setLoading(false);
     };
 
